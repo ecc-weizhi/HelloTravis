@@ -3,6 +3,8 @@ jdk: oraclejdk7
 
 android:
   components:
+    - platform-tools
+
     # The BuildTools version used by your project
     - build-tools-22.0.1
 
@@ -12,6 +14,9 @@ android:
     # Specify at least one system image,
     # if you need to run emulator(s) during your tests
     - sys-img-armeabi-v7a-android-22
+    
+    # Design support library
+    - extra-android-m2repository
 
 before_install:
     - chmod +x ./gradlew
