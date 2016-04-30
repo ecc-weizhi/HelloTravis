@@ -1,22 +1,26 @@
 language: android
 jdk: oraclejdk7
-env:
-  matrix:
-    - ANDROID_TARGET=android-22  ANDROID_ABI=armeabi-v7a
 
 android:
   components:
-    - android-22
+    # The BuildTools version used by your project
     - build-tools-22.0.1
+
+    # The SDK version used to compile your project
+    - android-22
+
+    # Specify at least one system image,
+    # if you need to run emulator(s) during your tests
+    - sys-img-armeabi-v7a-android-22
 
 before_install:
     - chmod +x ./gradlew
 
+# Emulator Management: Create, Start and Wait
 before_script:
-  # Create and start emulator
-  - echo no | android create avd --force -n test -t $ANDROID_TARGET --abi $ANDROID_ABI
-  - emulator -avd test -no-skin -no-audio -no-window &
-  - adb wait-for-device
+  - echo no | android create avd --force -n test -t android-22 --abi armeabi-v7a
+  - emulator -avd test -no-audio -no-window &
+  - android-wait-for-emulator
   - adb shell input keyevent 82 &
 
 script: ./gradlew clean check
